@@ -1,4 +1,9 @@
-let net;
+// source https://gist.github.com/cyphunk/6c255fa05dd30e69f438a930faeb53fe
+function softmax(arr) {
+  return arr.map(function(value,index) { 
+    return Math.exp(value) / arr.map( function(y /*value*/){ return Math.exp(y) } ).reduce( function(a,b){ return a+b })
+  })
+}
 
 function preprocessImage(image) {
 	let tensor = tf.browser.fromPixels(image)
@@ -8,35 +13,45 @@ function preprocessImage(image) {
 			.expandDims();
 }
 
-async function app() {
-  console.log('Loading mobilenet..');
+async function cifarCNN_makePrediction() {
+  console.log('Loading mobilenet..');  
+  const classes = {
+    0:'airplane',
+    1:'automobile',
+    2:'bird',
+    3:'cat',
+    4:'deer',
+    5:'dog',
+    6:'frog',
+    7:'horse',
+    8:'ship',
+    9:'truck'
+  }
 
   // Load the model.
-  net = await tf.loadLayersModel('https://raw.githubusercontent.com/simecek/dspracticum2020/master/docs/export_model/model.json');
+  var model = undefined;
+  // model = await tf.loadLayersModel('https://raw.githubusercontent.com/simecek/dspracticum2020/master/docs/export_model/model.json');
+  model = await tf.loadLayersModel('https://raw.githubusercontent.com/davidcechak/eccb21_tf.js/main/assets/cnn_cifar/model.json');
   console.log('Successfully loaded model');
 
   // Make a prediction through the model on our image.
   const imgEl = document.getElementById('img');
-  const result = await net.predict(preprocessImage(imgEl));
-  const p_cat = result.dataSync()[0];
+  const result = await model.predict(preprocessImage(imgEl));
+  var result_pred = result.dataSync();
   console.log('Prediction done');
 
-  // For the assignment, change this
-  // YOUR CODE STARTS HERE
-  var pred = document.getElementById('pred');
-  if (p_cat < 0.5) {
-      prob = ((1-p_cat)*100).toFixed(2);
-      pred.innerHTML = "<b>Dog</b> (probability=".concat(prob, "%)");
-  } else {
-    prob = (p_cat*100).toFixed(2);
-    pred.innerHTML = "<b>Cat</b> (probability=".concat(prob, "%)");
-  }
-  /// YOUR CODE ENDS HERE
 
-  return(p_cat);
+  var pred = document.getElementById('cifarCNN_pred');
+  result_pred = softmax(result_pred)
+  const result_prob = Math.max(...result_pred)
+  const result_class = result_pred.indexOf(result_prob)
+
+  const output = "".concat("<b>Output:</b><br/><br/>The predicted class is <b>", classes[result_class], '</b> with the probability <b>', result_prob,'</b> <br/><br/><br/>');
+
+  pred.innerHTML = output
+
+  return(classes[result_class]);
 }
-
-app();
 
 // HTML5 image file reader 
 if (window.FileReader) {
@@ -52,8 +67,6 @@ if (window.FileReader) {
       })(f);
 
       reader.readAsDataURL(f);
-   
-      app();
   }
 } else {
   alert('This browser does not support FileReader');
