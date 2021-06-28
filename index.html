@@ -19,23 +19,22 @@
   </HEAD>
   <BODY>
     <!-- import the js files -->
-    <script type="text/javascript" src="penguinn.js"></script>
+    <script type="text/javascript" src="genomicCNN.js"></script>
     
     <div class="main_container">
       <div class="w3-container">
         <div class="w3-bar w3-black">
-          <button class="w3-bar-item w3-button tablink w3-blue" onclick="openTab(event, 'Penguinn')">Penguinn</button>
+          <button class="w3-bar-item w3-button tablink w3-blue" onclick="openTab(event, 'GenomicSequencesCNN')">Genomic sequences CNN</button>
           <button class="w3-bar-item w3-button tablink" onclick="openTab(event, 'cifarCNN')">CNN on images</button>
-          <button class="w3-bar-item w3-button tablink" onclick="openTab(event, 'GenomicSequencesCNN')">Genomic sequences CNN</button>
-          <button class="w3-bar-item w3-button tablink" onclick="openTab(event, 'Space')">Space for your model</button>
+          <!-- <button class="w3-bar-item w3-button tablink" onclick="openTab(event, 'GenomicSequencesCNN')">Genomic sequences CNN</button> -->
+          <button class="w3-bar-item w3-button tablink" onclick="openTab(event, 'Space')">Add your model</button>
         </div>
 
 
-        <!-- Penguinn -->
-        <div id="Penguinn" class="tab">
+        <!-- Genomic sequences CNN -->
+        <div id="GenomicSequencesCNN" class="tab">
           <div class="w3-container w3-border">
-          <!-- <div id="Penguinn" class="w3-container w3-border tab"> -->
-            <H1>Penguinn JS</H1>
+            <H1>Genomic sequences CNN</H1>
             <form>
               <label class="radio-inline">
                 <input type="radio" name="optradio" id="opt_single" onclick="checkedSingle();" checked>Single sequence
@@ -72,6 +71,7 @@
           <div class="w3-container w3-border">
               <H1>CNN on images (The CIFAR-10 dataset)</H1>
               <p>Classes in the dataset: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck</p>
+              TODO add drag and drop and examples from cifar
 
               <div>
                 <div id="input"></div><input type="file" id="files" /><br />
@@ -85,13 +85,9 @@
             <div class = "w3-container prob", id = "cifarCNN_pred"></div>
         </div>
 
-        <div id="GenomicSequencesCNN" class="w3-container w3-border tab" style="display:none">
-          <H1>Genomic sequences CNN</H1>
-
-        </div>
-
         <div id="Space" class="w3-container w3-border tab" style="display:none">
-          <H1>Space for your model</H1>
+          <H1>Add your model</H1>
+          <p><b>TODO</b> <br/>Go have a look at our simple template which is ready to run. Follow the guide and comments in the code.</p>
 
         </div>
       </div>
@@ -99,7 +95,7 @@
 
       <!-- footer -->
       <footer class="w3-container footer">
-        <p>Feel free to use the full code on github or contact the tutors for help. <BR/> <A href="https://github.com/ML-Bioinfo-CEITEC/ECCB2021" target="_blank" rel="noopener noreferrer">https://github.com/ML-Bioinfo-CEITEC/ECCB2021</A></p>
+        <p>Feel free to use the full code on github or contact the tutors for help. <br/> <a href="https://github.com/ML-Bioinfo-CEITEC/ECCB2021" target="_blank" rel="noopener noreferrer">https://github.com/ML-Bioinfo-CEITEC/ECCB2021</a></p>
       </footer>
     </div>
 
