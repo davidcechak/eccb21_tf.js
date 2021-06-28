@@ -6,6 +6,7 @@ function softmax(arr) {
 }
 
 function preprocessImage(image) {
+  // TODO change the target size in resize function to your model's input size
 	let tensor = tf.browser.fromPixels(image)
 		.resizeNearestNeighbor([32, 32])
 		.toFloat();
@@ -14,7 +15,8 @@ function preprocessImage(image) {
 }
 
 async function cifarCNN_makePrediction() {
-  console.log('Loading mobilenet..');  
+  console.log('Loading model..');  
+  // TODO change the classes' dictionary based on what is the output of your model
   const classes = {
     0:'airplane',
     1:'automobile',
@@ -30,7 +32,7 @@ async function cifarCNN_makePrediction() {
 
   // Load the model.
   var model = undefined;
-  // model = await tf.loadLayersModel('https://raw.githubusercontent.com/simecek/dspracticum2020/master/docs/export_model/model.json');
+  // TODO switch the link for your own model link
   model = await tf.loadLayersModel('https://raw.githubusercontent.com/davidcechak/eccb21_tf.js/main/assets/cnn_cifar/model.json');
   console.log('Successfully loaded model');
 
@@ -41,6 +43,7 @@ async function cifarCNN_makePrediction() {
   console.log('Prediction done');
 
 
+  // TODO change the format of your output if necessary 
   var pred = document.getElementById('cifarCNN_pred');
   result_pred = softmax(result_pred)
   const result_prob = Math.max(...result_pred)
